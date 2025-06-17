@@ -42,7 +42,7 @@ public class Login {
 
     // Check if cell number is valid
     public boolean isValidCellNumber() {
-        return cellNumber != null && cellNumber.startsWith("+27") && cellNumber.length() == 12;
+        return cellNumber != null && cellNumber.startsWith("+27") && cellNumber.length() == 9;
     }
 
     public String getLoginStatus() {

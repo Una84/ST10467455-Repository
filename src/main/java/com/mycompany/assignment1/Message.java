@@ -4,7 +4,7 @@
  */
 package com.mycompany.assignment1;
 
-import java.util.Random;
+import java.util.Objects;
 import org.json.JSONObject;
 
 /**
@@ -12,98 +12,91 @@ import org.json.JSONObject;
  * @author RC_Student_lab
  */
 public class Message {
-       
-    // Static variable to keep track of the total number of messages sent
-    private static int messageSentCount = 0;
 
-    // Instance variables
-    private int numMessages;
-    private String messageID;
-    private String recipient;
-    private String messageContent;
+    static int getTotalMessagesSent() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+      private String recipient;
+    private String message;
+    private String flag;
     private String messageHash;
+    private int messageId;
 
     // Constructor
-    public Message(String recipient, String messageContent) {
-        if (!isValidRecipient(recipient)) {
-            throw new IllegalArgumentException("Invalid recipient number. Must start with +27 and be followed by 9 digits.");
-        }
-
-        if (messageContent.length() > 250) {
-            throw new IllegalArgumentException("Message exceeds 250 characters.");
-        }
-
-        this.recipient = recipient.trim();
-        this.messageContent = messageContent;
-        this.messageID = generateMessageID();
-        this.numMessages = ++messageSentCount;
-        this.messageHash = createMessageHash();
+    public Message(String recipient, String message, String flag, int messageId) {
+        this.recipient = recipient;
+        this.message = message;
+        this.flag = flag;
+        this.messageId = messageId;
+        this.messageHash = generateMessageHash(message);
     }
 
-    // Getter for message content
-    public String getMessageContent() {
-        return messageContent;
+    // Getter methods
+    public String getRecipient() {
+        return recipient;
     }
 
-    // Generate a 9-digit message ID
-    private String generateMessageID() {
-        Random rand = new Random();
-        int id = 100000000 + rand.nextInt(900000000); // Ensures a 9-digit number
-        return String.valueOf(id);
+    public String getMessage() {
+        return message;
     }
 
-    // Validate if the message ID has 9 digits
-    public boolean isValidMessageID() {
-        return messageID != null && messageID.length() == 9;
+    public String getFlag() {
+        return flag;
     }
 
-    // Validate recipient phone number format
-    public boolean isValidRecipient(String number) {
-        return number != null && number.matches("\\+27\\d{9}");
+    public String getMessageHash() {
+        return messageHash;
     }
 
-    // Create a hash using parts of the content and ID
-    private String createMessageHash() {
-        String[] words = messageContent.trim().split(" ");
-        String firstWord = words[0].toUpperCase();
-        String lastWord = words[words.length - 1].toUpperCase();
-        String idPrefix = messageID.substring(0, 2);
-        return idPrefix + ":" + numMessages + ":" + firstWord + lastWord;
+    public int getMessageId() {
+        return messageId;
     }
 
-    // Return a message based on user option
-    public String getMessageOption(int option) {
-        return switch (option) {
-            case 1 -> "Message successfully sent.";
-            case 2 -> "Press 0 to delete message.";
-            case 3 -> "Message successfully stored.";
-            default -> "Invalid option entered.";
-        };
+    // Method to generate the hash for the message
+    private String generateMessageHash(String message) {
+        return Integer.toHexString(message.hashCode());  // Simple hash generation
     }
 
-    // Store message in a JSON object
-    public JSONObject toJSON() {
-        JSONObject json = new JSONObject();
-        json.put("messageID", messageID);
-        json.put("messageHash", messageHash);
-        json.put("recipient", recipient);
-        json.put("message", messageContent);
-        return json;
+    @Override
+    public String toString() {
+        return "MessageID: " + messageId + ", Recipient: " + recipient + ", Message: " + message + ", Hash: " + messageHash;
     }
 
-    // Print message information
-    public String printMessageDetails() {
-        return "Message ID: " + messageID +
-               "\nMessage Hash: " + messageHash +
-               "\nRecipient: " + recipient +
-               "\nMessage: " + messageContent;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message1 = (Message) o;
+        return messageId == message1.messageId;
     }
 
-    // Return total messages sent
-    public static int getTotalMessagesSent() {
-        return messageSentCount;
+    @Override
+    public int hashCode() {
+        return Objects.hash(messageId);
+    }
+
+    String getMessageContent() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    boolean isValidMessageID() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    boolean isValidRecipient(String number) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    String getMessageOption(int option) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    JSONObject toJSON() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    String printMessageDetails() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
-    
-    
 
